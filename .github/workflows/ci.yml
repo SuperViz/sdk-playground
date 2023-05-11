@@ -26,6 +26,7 @@ jobs:
         run: |
           git config --global user.name SuperViz
           git config --global user.email ci@superviz.com
+          git branch -D beta-release
           git checkout -b beta-release
           git add -A
           git commit -m "ci: deploy beta sdk"
