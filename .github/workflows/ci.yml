@@ -21,10 +21,11 @@ jobs:
           yarn build
           cd ./dist
           git init
-          git config --global init.defaultBranch beta-release
+          git branch -M beta-release
           git remote add origin git@github.com:SuperViz/sdk-playground.git 
           git config --global user.name SuperViz
           git config --global user.email ci@superviz.com
+          git checkout -b beta-release
           git add .
           git commit -m "Deploy BETA SDK"
           git push --force --quiet beta-release
