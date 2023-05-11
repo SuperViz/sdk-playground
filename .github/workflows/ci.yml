@@ -20,7 +20,6 @@ jobs:
           touch .version.js && echo "echo \"export const version = 'beta'\" > .version.js" | bash -
           yarn build
           shopt -s extglob
-          rm -rf !(dist|.git|.|..|.gitignore|.npmrc|package.json)
           cp -R dist/* .
           ls -la
       - name: Delete the release branch
