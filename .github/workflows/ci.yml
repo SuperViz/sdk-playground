@@ -19,13 +19,18 @@ jobs:
         run: |
           touch .version.js && echo "echo \"export const version = 'beta'\" > .version.js" | bash -
           yarn build
-          echo "rm -rf !(dist|.git|.|..)"
+          shopt -s extglob
+          rm -rf !(dist|.git|.|..)
           cp -R dist/* .
+          find dist -name ".[^.]*" -prune -exec rm -rf {} +
           ls -la
-      - name: Commit e envio para o GitHub
+      - name: Delete the release branch
         run: |
           git config --global user.name SuperViz
           git config --global user.email ci@superviz.com
+          git push --delete origin beta-release
+      - name: Commit and push build files
+        run: |
           git checkout -b beta-release
           git add -A
           git commit -m "ci: deploy beta sdk"
