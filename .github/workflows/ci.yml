@@ -19,20 +19,14 @@ jobs:
         run: |
           touch .version.js && echo "echo \"export const version = 'beta'\" > .version.js" | bash -
           yarn build
-          shopt -s extglob
-          cp -R dist/* .
-          ls -la
-      - name: Delete the release branch
-        run: |
+          cd ./dist
+          git init
           git config --global user.name SuperViz
           git config --global user.email ci@superviz.com
-          git push --delete origin beta-release
-      - name: Commit and push build files
-        run: |
-          git checkout -b beta-release
-          git add -A
-          git commit -m "ci: deploy beta sdk"
-          git push origin beta-release
+          git add .
+          git commit -m "Deploy BETA SDK"
+          git push --force --quiet "https://${{ secrets.TOKEN_GITHUB }}@${GITHUB_REPOSITORY}" beta-release:beta-release
+
   # main:
   #   if: "github.ref == 'refs/heads/main'"
   #   runs-on: ubuntu-latest
