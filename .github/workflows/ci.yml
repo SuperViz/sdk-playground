@@ -20,13 +20,13 @@ jobs:
           touch .version.js && echo "echo \"export const version = 'beta'\" > .version.js" | bash -
           yarn build
       - name: Push
-         uses: s0/git-publish-subdir-action@develop
+        uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
           BRANCH: beta-release
           FOLDER: dist
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "ci: ({sha}) {msg}"
+          MESSAGE: 'ci: ({sha}) {msg}'
 
   # main:
   #   if: "github.ref == 'refs/heads/main'"
