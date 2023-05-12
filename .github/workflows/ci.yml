@@ -19,16 +19,14 @@ jobs:
         run: |
           touch .version.js && echo "echo \"export const version = 'beta'\" > .version.js" | bash -
           yarn build
-          cd ./dist
-          git init
-          git branch -M beta-release
-          git remote add origin git@github.com:SuperViz/sdk-playground.git 
-          git config --global user.name SuperViz
-          git config --global user.email ci@superviz.com
-          git checkout -b beta-release
-          git add .
-          git commit -m "Deploy BETA SDK"
-          git push --force --quiet beta-release
+      - name: Push
+         uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: beta-release
+          FOLDER: dist
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE: "ci: ({sha}) {msg}"
 
   # main:
   #   if: "github.ref == 'refs/heads/main'"
